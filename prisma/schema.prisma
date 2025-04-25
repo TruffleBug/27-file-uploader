@@ -40,3 +40,21 @@ model User {
   posts   Post[]
   profile Profile?
 }
+
+
+// THIS SCHEMA NOT UPDATED W/ DB SCHEMA YET
+// HOW TO GET SIZE OF FILE AND URL?
+model File {
+  id          Int       @id @default(autoincrement())
+  name        String    @db.VarChar(100)
+  size        
+  uploadedAt  DateTime  @default(now())
+  url         
+  folder      Folder    @relation(fields: [folderId], references: [id])
+  folderId    Int
+}
+
+model Folder {
+  id    Int     @id @default(autoincrement())
+  name  String  @db.VarChar(100)
+}
