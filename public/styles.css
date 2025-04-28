@@ -2,3 +2,7 @@ body {
 	color: violet;
 	background-color: teal
 }
+
+.foldersList {
+	list-style: none;
+}

@@ -6,12 +6,11 @@
 	<body>
         <h1><%= locals.title %></h1>
 
-        <%- include('partials/errors.ejs') %>
+        <form action="/newFolder" method="POST">
+            <label for="folderName">Folder name:</label>
+            <input type="text" name="folderName" id="folderName" required />
 
-        <form action="/upload" method="POST" enctype="multipart/form-data">
-            <input type="file" name="uploadedFiles" multiple required />
-
-            <button type="submit">Upload</button>
+            <button type="submit">Submit</button>
         </form>
         <button onclick="location.href='/';">Cancel</button>
 	</body>

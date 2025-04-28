@@ -3,13 +3,24 @@ const { PrismaClient } = require('./generated/prisma');
 
 const prisma = new PrismaClient();
 
-async function main() {
-	const post = await prisma.post.update({
-		where: { id: 1 },
-		data: { published: true },
-	});
-	console.log(post);
+// async function main() {
+// 	const folder = await prisma.folder.update({
+// 		where: { id: 1 },
+// 		data: { published: true },
+// 	});
+// 	console.log(folder);
+// }
 
+async function main() {
+	const folder = await prisma.folder.createMany({
+		data: [
+			{ name: 'A' },
+			{ name: 'B' },
+			{ name: 'C' },
+		],
+		skipDuplicates: true,
+	});
+	console.log(folder);
 }
 
 main()

@@ -1,10 +1,8 @@
 const { Router } = require("express");
 const indexRouter = Router();
+const fileController = require("../controllers/fileController");
 
 indexRouter
-    .route('/')
-    .get((req, res) => {
-        res.render('index', { title: 'Your Files' })
-    })
+    .get('/', fileController.readAllFoldersGet)
 
 module.exports = indexRouter;

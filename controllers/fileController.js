@@ -1,31 +1,70 @@
-const { body, validationResult } = require('express-validator');
 const multer = require('multer');
 const upload = multer({ dest: './uploads/ '});
+const db = require("../db/queries");
 
-const validateFile = [
-    body('fileName')
-        .trim()
-        .notEmpty()
-        .withMessage('Please include a file name.'),
-    body('uploadedFile')
-        .notEmpty()
-        .withMessage('Please include a file.')
-]
+// FOLDERS
+async function createFolderGet (req, res) {
+    res.render('newFolder', { title: 'New Folder' });
+};
 
-exports.uploadFileGet = (req, res) => {
-    res.render('upload', { title: 'Upload File' })
+async function createFolderPost (req, res) {
+    const { folderName } = req.body;
+    await db.createFolder(folderName);
+    console.log('New folder created: ', folderName);
+    res.redirect('/');
+};
+
+async function readAllFoldersGet (req, res) {
+    const folders = await db.readFolders();
+    res.render('index', { title: 'Your Files', folders: folders });
+};
+
+async function updateFolderPost (req, res) {
+    console.log('UPDATE FOLDER REQ BODY: ', newFileName)
+    // await db.updateFolder(folderId, folderName);
+    res.redirect('/');
 }
 
-// ERRORS ARRAY IS NOT CLEARING EVERY TIME. NEVER REACHES CONSOLE.LOG
-exports.uploadFilePost = [
-    upload.single('uploadedFile'),
-    validateFile,
+async function deleteFolderPost (req, res) {
+    await db.deleteFolder(req.params.folderId);
+    res.redirect('/');
+}
+
+// FILES
+function createFileGet (req, res) {
+    res.render('upload', { title: 'Upload File' })
+};
+
+const createFilePost = [
+    upload.array('uploadedFiles', 5),
     (req, res) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).render('upload', { title: 'Upload File', errors: errors.array() })
-        };
-        console.log(req.file, req.body);
-        res.send('File uploaded. (Placeholder)');
+        console.log('SUCCESS!', req.files, 'BODY: ', req.body);
+        res.redirect('/')
     }
 ];
+
+
+
+module.exports = { 
+    // CREATE FOLDERS
+    createFolderGet,
+    createFolderPost,
+    // READ FOLDERS
+    readAllFoldersGet,
+    // UPDATE FOLDERS
+    updateFolderPost,
+    // DELETE FOLDERS
+    deleteFolderPost,
+
+
+    // CREATE FILES
+    createFileGet,
+    createFilePost
+    // READ FILES
+
+    // UPDATE FILES
+
+    // DELETE FILES
+
+
+}

@@ -6,6 +6,41 @@
 	<body>
         <h1><%= locals.title %></h1>
 
-        <a href="/upload">Upload File</a>
+		<h2>Folders</h2>
+
+		<ul class="foldersList">
+			<% if (locals.folders) {%> 
+                <% folders.forEach(function(f) { %>
+                    <li> 
+						<%= f.name %> 
+
+						// MAKE INPUT BOX APPEAR ON CLICK INSTEAD
+						<form action="/updateFolder/<%= f.id %>" method="POST" style="display: inline">
+							<script>
+								function getNewFileName() {
+									let newFileName = prompt(`Rename folder asdf to:`)
+								}
+							</script>
+
+							<button type="submit" onclick="getNewFileName()">
+								Update
+							</button>
+						</form>
+
+						<form action="/deleteFolder/<%= f.id %>" method="POST" style="display: inline">
+							<button type="submit" onclick="return confirm('Are you sure you want to delete folder <%= f.name %>?');">
+								Delete
+							</button>
+						</form>
+					</li>
+				<% }); %> 
+			<% } %>
+		</ul>
+
+		<a href="/newFolder">New Folder</a>
+
+		<h2>Unsorted Files</h2>
+
+		<a href="/upload">Upload File(s)</a>
 	</body>
 </html>
