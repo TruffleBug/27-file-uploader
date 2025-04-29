@@ -20,15 +20,16 @@ async function readAllFoldersGet (req, res) {
 };
 
 async function updateFolderPost (req, res) {
-    console.log('UPDATE FOLDER REQ BODY: ', newFileName)
-    // await db.updateFolder(folderId, folderName);
+    const { folderName } = req.body;
+    await db.updateFolder(Number(req.params.folderId), folderName);
+    console.log('it is reaching updateFolderPost function, folderId: ', req.params.folderId)
     res.redirect('/');
-}
+};
 
 async function deleteFolderPost (req, res) {
     await db.deleteFolder(req.params.folderId);
     res.redirect('/');
-}
+};
 
 // FILES
 function createFileGet (req, res) {
