@@ -3,6 +3,8 @@ const indexRouter = Router();
 const fileController = require("../controllers/fileController");
 
 indexRouter
-    .get('/', fileController.readAllFoldersGet)
+    .get('/', fileController.readAllFoldersGet, (req, res) => {
+        res.render('index', { title: 'Your Files', folders: res.locals.folders });
+    })
 
 module.exports = indexRouter;

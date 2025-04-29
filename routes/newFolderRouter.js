@@ -3,7 +3,11 @@ const newFolderRouter = Router();
 const fileController = require("../controllers/fileController");
 
 newFolderRouter
-    .get('/', fileController.createFolderGet)
-    .post('/', fileController.createFolderPost)
+    .get('/', (req, res) => {
+        res.render('newFolder', { title: 'New Folder' });
+    })
+    .post('/', fileController.createFolderPost, (req, res) => {
+        res.redirect('/');
+    })
 
 module.exports = newFolderRouter;

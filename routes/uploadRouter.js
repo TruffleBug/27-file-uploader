@@ -1,9 +1,15 @@
 const { Router } = require("express");
 const uploadRouter = Router();
-const fileController = require("../controllers/fileController");
+const multer = require('multer');
+const upload = multer({ dest: './uploads/ '});
+
 
 uploadRouter
-    .get('/', fileController.createFileGet)
-    .post('/', fileController.createFilePost)
+    .get('/', (req, res) => {
+        res.render('upload', { title: 'Upload File' });
+    })
+    .post('/', upload.array('uploadedFiles', 5), (req, res) => {
+        res.redirect('/');
+    })
 
 module.exports = uploadRouter;

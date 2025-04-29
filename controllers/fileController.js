@@ -3,52 +3,36 @@ const upload = multer({ dest: './uploads/ '});
 const db = require("../db/queries");
 
 // FOLDERS
-async function createFolderGet (req, res) {
-    res.render('newFolder', { title: 'New Folder' });
-};
-
-async function createFolderPost (req, res) {
+async function createFolderPost (req, res, next) {
     const { folderName } = req.body;
     await db.createFolder(folderName);
     console.log('New folder created: ', folderName);
-    res.redirect('/');
+    next();
 };
 
-async function readAllFoldersGet (req, res) {
-    const folders = await db.readFolders();
-    res.render('index', { title: 'Your Files', folders: folders });
+async function readAllFoldersGet (req, res, next) {
+    res.locals.folders = await db.readFolders();
+    next();
 };
 
-async function updateFolderPost (req, res) {
+async function updateFolderPost (req, res, next) {
     const { folderName } = req.body;
     await db.updateFolder(Number(req.params.folderId), folderName);
-    console.log('it is reaching updateFolderPost function, folderId: ', req.params.folderId)
-    res.redirect('/');
+    console.log('it is reaching updateFolderPost function, folderId: ', req.params.folderId);
+    next();
 };
 
-async function deleteFolderPost (req, res) {
+async function deleteFolderPost (req, res, next) {
     await db.deleteFolder(req.params.folderId);
-    res.redirect('/');
+    next();
 };
 
 // FILES
-function createFileGet (req, res) {
-    res.render('upload', { title: 'Upload File' })
-};
-
-const createFilePost = [
-    upload.array('uploadedFiles', 5),
-    (req, res) => {
-        console.log('SUCCESS!', req.files, 'BODY: ', req.body);
-        res.redirect('/')
-    }
-];
 
 
 
 module.exports = { 
     // CREATE FOLDERS
-    createFolderGet,
     createFolderPost,
     // READ FOLDERS
     readAllFoldersGet,
@@ -59,8 +43,6 @@ module.exports = {
 
 
     // CREATE FILES
-    createFileGet,
-    createFilePost
     // READ FILES
 
     // UPDATE FILES
