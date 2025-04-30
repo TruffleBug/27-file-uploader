@@ -18,8 +18,9 @@ model File {
   id         Int      @id @default(autoincrement())
   name       String   @db.VarChar(100) @unique
   uploadedAt DateTime @default(now())
-  folder     Folders   @relation(fields: [folderId], references: [id])
-  folderId   Int
+  size       Int
+  folder     Folders?   @relation(fields: [folderId], references: [id])
+  folderId   Int?
 }
 
 model Folders {

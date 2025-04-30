@@ -1,0 +1,22 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="/styles.css">
+		<title><%= locals.title %></title>
+	</head>
+	<body>
+        <h1><%= locals.title %></h1>
+
+		<h2>Current folder: <%= locals.folderName.name %></h2>
+
+		<ul class="fileList">
+			<% if(locals.currentFiles) { %>
+				<% currentFiles.forEach(function(f) { %>
+					<li><%= f.name %></li>
+				<% }) %>
+			<% } %>
+		</ul>
+
+		<a href="/upload">Upload File</a> </br>
+		<a href="/">Back</a>
+	</body>
+</html>

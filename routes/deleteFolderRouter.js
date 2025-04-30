@@ -1,9 +1,9 @@
 const { Router } = require("express");
 const deleteFolderRouter = Router();
-const fileController = require("../controllers/fileController");
+const folderController = require("../controllers/folderController");
 
 deleteFolderRouter
-    .post('/:folderId', fileController.deleteFolderPost, (req, res) => { 
+    .post('/:folderId', folderController.deleteFolderPost, (req, res) => { 
         res.redirect('/')
     })
 

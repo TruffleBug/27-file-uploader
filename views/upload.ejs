@@ -9,7 +9,17 @@
         <%- include('partials/errors.ejs') %>
 
         <form action="/upload" method="POST" enctype="multipart/form-data">
-            <input type="file" name="uploadedFiles" multiple required />
+            <input type="file" name="uploadedFile" required /> </br>
+
+            <label for="folder">Select folder:</label>
+            <select name="folder" id="folder">
+                <option value="none" selected>None</option>
+                <% if(locals.folders) { %>
+                    <% folders.forEach(function(f) { %>
+                        <option value="<%= f.name %>"> <%= f.name %> </option>
+                    <% }); %>
+                <% } %>
+            </select>
 
             <button type="submit">Upload</button>
         </form>

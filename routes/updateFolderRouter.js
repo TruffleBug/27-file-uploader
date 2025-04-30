@@ -1,9 +1,9 @@
 const { Router } = require("express");
 const updateFolderRouter = Router();
-const fileController = require("../controllers/fileController");
+const folderController = require("../controllers/folderController");
 
 updateFolderRouter
-    .post('/:folderId', fileController.updateFolderPost, (req, res) => {
+    .post('/:folderId', folderController.updateFolderPost, (req, res) => {
         res.redirect('/');
     })
 

@@ -3,6 +3,10 @@ body {
 	background-color: teal
 }
 
-.foldersList {
+.folderList {
 	list-style: none;
+}
+
+.fileList {
+
 }

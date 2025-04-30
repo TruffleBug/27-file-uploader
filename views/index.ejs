@@ -8,12 +8,12 @@
 
 		<h2>Folders</h2>
 
-		<ul class="foldersList">
+		<ul class="folderList">
 			<% if (locals.folders) {%> 
                 <% folders.forEach(function(f) { %>
                     <li> 
 						<div id="nameText <%= f.id %>" style="display: inline;">
-							<%= f.name %> 
+							<a href="/view?folder=<%= f.id %>"> <%= f.name %> </a>
 						</div>
 
 						<form action="/updateFolder/<%= f.id %>" method="POST" id="nameInput <%= f.id %>" style="display: none">
@@ -25,7 +25,8 @@
 						<button style="display: inline" id="updateButton <%= f.id %>" onclick="
 							document.getElementById('nameText <%= f.id %>').style.display='none',
 							document.getElementById('updateButton <%= f.id %>').style.display='none',
-							document.getElementById('nameInput <%= f.id %>').style.display='inline'
+							document.getElementById('nameInput <%= f.id %>').style.display='inline',
+							document.getElementById('cancelButton <%= f.id %>').style.display='inline'
 						" >
 							Update
 						</button>
@@ -35,6 +36,13 @@
 								Delete
 							</button>
 						</form>
+
+						<button id="cancelButton <%= f.id %>" style="display: none;" onclick="
+							document.getElementById('nameText <%= f.id %>').style.display='inline',
+							document.getElementById('updateButton <%= f.id %>').style.display='inline',
+							document.getElementById('nameInput <%= f.id %>').style.display='none',
+							document.getElementById('cancelButton <%= f.id %>').style.display='none'
+						">Cancel</button>
 					</li>
 				<% }); %> 
 			<% } %>
@@ -44,6 +52,14 @@
 
 		<h2>Unsorted Files</h2>
 
-		<a href="/upload">Upload File(s)</a>
+		<ul class="fileList">
+			<% if(locals.currentFiles) { %>
+				<% currentFiles.forEach(function(f) { %>
+					<li><%= f.name %></li>
+				<% }) %>
+			<% } %>
+		</ul>
+
+		<a href="/upload">Upload File</a>
 	</body>
 </html>

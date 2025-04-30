@@ -2,13 +2,14 @@ const { Router } = require("express");
 const uploadRouter = Router();
 const multer = require('multer');
 const upload = multer({ dest: './uploads/ '});
-
+const folderController = require("../controllers/folderController");
+const fileController = require("../controllers/fileController");
 
 uploadRouter
-    .get('/', (req, res) => {
-        res.render('upload', { title: 'Upload File' });
+    .get('/', folderController.readAllFoldersGet, (req, res) => {
+        res.render('upload', { title: 'Upload File', folders: res.locals.folders });
     })
-    .post('/', upload.array('uploadedFiles', 5), (req, res) => {
+    .post('/', fileController.createFilePost, (req, res) => {
         res.redirect('/');
     })
 
