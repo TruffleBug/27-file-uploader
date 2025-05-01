@@ -79,7 +79,6 @@ async function createFiles(uploadedFile, uploadToFolder) {
     });
 };
 
-// NEED TO GET THIS TO WORK
 async function readFiles(id) {
     let searchId;
     if(!id) {
@@ -91,11 +90,6 @@ async function readFiles(id) {
     const files = await prisma.file.findMany({
         where: {
             folderId: searchId
-            // folder: {
-            //     is: { 
-            //         name: 'Bees',
-            //     } 
-            // }
         },
         orderBy: [
             { name: 'asc' }
@@ -104,6 +98,26 @@ async function readFiles(id) {
     console.log(files)
     return files
 };
+
+async function updateFile(fileId, fileName) {
+    await prisma.file.update({
+        where: {
+            id: fileId,
+        },
+        data: {
+            name: fileName,
+        },
+    })
+};
+
+async function deleteFile(fileId) {
+    await prisma.file.delete({
+        where: {
+            id: Number(fileId)
+        }
+    })
+};
+
 
 
 module.exports = {
@@ -114,5 +128,7 @@ module.exports = {
     deleteFolder,
 
     createFiles,
-    readFiles
+    readFiles,
+    updateFile,
+    deleteFile
 }

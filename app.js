@@ -16,14 +16,18 @@ const uploadRouter = require('./routes/uploadRouter');
 const newFolderRouter = require('./routes/newFolderRouter');
 const deleteFolderRouter = require('./routes/deleteFolderRouter');
 const updateFolderRouter = require('./routes/updateFolderRouter');
-const viewFilesRouter = require('./routes/viewFilesRouter');
+const viewFolderRouter = require('./routes/viewFolderRouter');
+const updateFileRouter = require('./routes/updateFileRouter');
+const deleteFileRouter = require('./routes/deleteFileRouter');
 
 app.use('/', indexRouter);
 app.use('/upload', uploadRouter);
 app.use('/newFolder', newFolderRouter); 
 app.use('/deleteFolder', deleteFolderRouter); 
 app.use('/updateFolder', updateFolderRouter); 
-app.use('/view', viewFilesRouter); 
+app.use('/view', viewFolderRouter); 
+app.use('/updateFile', updateFileRouter); 
+app.use('/deleteFile', deleteFileRouter); 
 
 
 const PORT = 3000;

@@ -16,20 +16,20 @@
 							<a href="/view?folder=<%= f.id %>"> <%= f.name %> </a>
 						</div>
 
-						<form action="/updateFolder/<%= f.id %>" method="POST" id="nameInput <%= f.id %>" style="display: none">
-							<input type="text" name="folderName" id="folderName" value="<%= f.name %>">
-							
-							<button type="submit"> Submit </button>
-						</form>
-
 						<button style="display: inline" id="updateButton <%= f.id %>" onclick="
 							document.getElementById('nameText <%= f.id %>').style.display='none',
 							document.getElementById('updateButton <%= f.id %>').style.display='none',
 							document.getElementById('nameInput <%= f.id %>').style.display='inline',
 							document.getElementById('cancelButton <%= f.id %>').style.display='inline'
 						" >
-							Update
+							Rename
 						</button>
+
+						<form action="/updateFolder/<%= f.id %>" method="POST" id="nameInput <%= f.id %>" style="display: none">
+							<input type="text" name="folderName" id="folderName" value="<%= f.name %>">
+							
+							<button type="submit"> Submit </button>
+						</form>
 
 						<form action="/deleteFolder/<%= f.id %>" method="POST" style="display: inline">
 							<button type="submit" onclick="return confirm('Are you sure you want to delete folder <%= f.name %>?');">
@@ -52,13 +52,7 @@
 
 		<h2>Unsorted Files</h2>
 
-		<ul class="fileList">
-			<% if(locals.currentFiles) { %>
-				<% currentFiles.forEach(function(f) { %>
-					<li><%= f.name %></li>
-				<% }) %>
-			<% } %>
-		</ul>
+		<%- include('./partials/listOfFiles', { currentFiles: currentFiles }) %>
 
 		<a href="/upload">Upload File</a>
 	</body>

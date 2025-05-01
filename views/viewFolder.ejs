@@ -8,13 +8,7 @@
 
 		<h2>Current folder: <%= locals.folderName.name %></h2>
 
-		<ul class="fileList">
-			<% if(locals.currentFiles) { %>
-				<% currentFiles.forEach(function(f) { %>
-					<li><%= f.name %></li>
-				<% }) %>
-			<% } %>
-		</ul>
+		<%- include('./partials/listOfFiles', { currentFiles: currentFiles }) %>
 
 		<a href="/upload">Upload File</a> </br>
 		<a href="/">Back</a>

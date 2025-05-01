@@ -1,11 +1,11 @@
 const { Router } = require("express");
-const viewRouter = Router();
+const viewFolderRouter = Router();
 const folderController = require("../controllers/folderController");
 const fileController = require("../controllers/fileController");
 
-viewRouter
+viewFolderRouter
     .get('/', fileController.readFileByFolderGet, (req, res) => {
-        res.render('viewFiles', { title: 'Your Files', folderName: res.locals.folderName, currentFiles: res.locals.files });
+        res.render('viewFolder', { title: 'Your Files', folderName: res.locals.folderName, currentFiles: res.locals.files });
     })
 
-module.exports = viewRouter;
+module.exports = viewFolderRouter;

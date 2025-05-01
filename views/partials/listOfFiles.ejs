@@ -1,0 +1,39 @@
+<ul class="fileList">
+	<% if(locals.currentFiles) { %>
+		<% currentFiles.forEach(function(f) { %>
+			<li>
+				<div id="nameText <%= f.id %>" style="display: inline;">
+					 <%= f.name %>
+				</div>
+
+				<button style="display: inline" id="updateButton <%= f.id %>" onclick="
+					document.getElementById('nameText <%= f.id %>').style.display='none',
+					document.getElementById('updateButton <%= f.id %>').style.display='none',
+					document.getElementById('nameInput <%= f.id %>').style.display='inline',
+					document.getElementById('cancelButton <%= f.id %>').style.display='inline'
+				" >
+					Rename
+				</button>
+
+				<form action="/updateFile/<%= f.id %>" method="POST" id="nameInput <%= f.id %>" style="display: none">
+					<input type="text" name="fileName" id="fileName" value="<%= f.name %>">
+					
+					<button type="submit"> Submit </button>
+				</form>
+
+				<form action="/deleteFile/<%= f.id %>" method="POST" style="display: inline">
+					<button type="submit" onclick="return confirm('Are you sure you want to delete <%= f.name %>?');">
+						Delete
+					</button>
+				</form>
+
+				<button id="cancelButton <%= f.id %>" style="display: none;" onclick="
+					document.getElementById('nameText <%= f.id %>').style.display='inline',
+					document.getElementById('updateButton <%= f.id %>').style.display='inline',
+					document.getElementById('nameInput <%= f.id %>').style.display='none',
+					document.getElementById('cancelButton <%= f.id %>').style.display='none'
+				">Cancel</button>
+			</li>
+		<% }) %>
+	<% } %>
+</ul>
