@@ -1,9 +1,11 @@
+const cors = require('cors');
 const express = require('express');
 const app = express();
 const path = require('node:path');
 
 require('dotenv').config();
 
+app.use(cors());
 const assetsPath = path.join(__dirname, "public");
 app.use(express.json()); 
 app.use(express.static(assetsPath));

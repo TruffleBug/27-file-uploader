@@ -1,18 +1,23 @@
 const multer = require('multer');
-const upload = multer({ dest: './uploads/ '});
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+// const upload = multer({ dest: './uploads/ '});
 const db = require("../db/queries");
-
-const { createClient } = require('@supabase/supabase-js');
-// // Create a single supabase client for interacting with your database
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+const { supabase } = require('./../server/supabase.js');
+const { decode } = require('base64-arraybuffer');
+const { enable } = require('express/lib/application.js');
 
 
 const createFilePost = [
     upload.single('uploadedFile'),
     async (req, res, next) => {
         console.log('UPLOADED FILE: ', req.file)
+        
+        const fileBase64 = decode(req.file.buffer.toString("base64"));
+
         const filePath = `${Date.now()}_${req.file.filename}`
-        const { error } = await supabase.storage.from('27-file-uploader').upload(filePath, req.file)
+        // const { error } = await supabase.storage.from('27-file-uploader').upload(filePath, req.file)
+        const { error } = await supabase.storage.from('27-file-uploader').upload(req.file.originalname, fileBase64)
 
         if(error) {
             console.error('Error uploading file:', error);
