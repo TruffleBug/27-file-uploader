@@ -20,7 +20,7 @@ async function main() {
         ],
         skipDuplicates: true,
     });
-    console.log(folders);
+    // console.log(folders);
 }
 
 main()

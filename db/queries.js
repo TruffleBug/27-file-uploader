@@ -17,7 +17,7 @@ async function readFolders() {
             { name: 'asc' }
         ]
     });
-    console.log('FOLDERS: ', folders);
+    // console.log('FOLDERS: ', folders);
     return folders
 };
 
@@ -95,7 +95,7 @@ async function readFiles(id) {
             { name: 'asc' }
         ]
     });
-    console.log(files)
+    // console.log(files)
     return files
 };
 

@@ -2,10 +2,27 @@ const multer = require('multer');
 const upload = multer({ dest: './uploads/ '});
 const db = require("../db/queries");
 
+const { createClient } = require('@supabase/supabase-js');
+// // Create a single supabase client for interacting with your database
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+
+
 const createFilePost = [
     upload.single('uploadedFile'),
-    (req, res, next) => {
-        db.createFiles(req.file, req.body.folder);
+    async (req, res, next) => {
+        console.log('UPLOADED FILE: ', req.file)
+        const filePath = `${Date.now()}_${req.file.filename}`
+        const { error } = await supabase.storage.from('27-file-uploader').upload(filePath, req.file)
+
+        if(error) {
+            console.error('Error uploading file:', error);
+        } else {
+            const publicURL = supabase.storage.from('27-file-uploader').getPublicUrl(filePath);
+            console.log('Public URL:', publicURL.data.publicUrl);
+        }
+
+        // file is in req.file, text is in req.body
+        // db.createFiles(req.file, req.body.folder);
         next();
     }
 ];
@@ -28,6 +45,7 @@ async function deleteFilePost (req, res, next) {
     await db.deleteFile(req.params.fileId);
     next();
 };
+
 
 module.exports = { 
     createFilePost,
