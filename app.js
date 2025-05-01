@@ -12,23 +12,12 @@ app.use(express.urlencoded({ extended: true }));
 // ---------------------------------------------------------------------
 
 const indexRouter = require('./routes/indexRouter');
-const uploadRouter = require('./routes/uploadRouter');
-const newFolderRouter = require('./routes/newFolderRouter');
-const deleteFolderRouter = require('./routes/deleteFolderRouter');
-const updateFolderRouter = require('./routes/updateFolderRouter');
-const viewFolderRouter = require('./routes/viewFolderRouter');
-const updateFileRouter = require('./routes/updateFileRouter');
-const deleteFileRouter = require('./routes/deleteFileRouter');
+const folderRouter = require('./routes/folderRouter');
+const fileRouter = require('./routes/fileRouter');
 
 app.use('/', indexRouter);
-app.use('/upload', uploadRouter);
-app.use('/newFolder', newFolderRouter); 
-app.use('/deleteFolder', deleteFolderRouter); 
-app.use('/updateFolder', updateFolderRouter); 
-app.use('/view', viewFolderRouter); 
-app.use('/updateFile', updateFileRouter); 
-app.use('/deleteFile', deleteFileRouter); 
-
+app.use('/folder', folderRouter);
+app.use('/file', fileRouter);
 
 const PORT = 3000;
 app.listen(PORT, () => {

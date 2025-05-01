@@ -13,7 +13,7 @@
                 <% folders.forEach(function(f) { %>
                     <li> 
 						<div id="nameText <%= f.id %>" style="display: inline;">
-							<a href="/view?folder=<%= f.id %>"> <%= f.name %> </a>
+							<a href="/folder/view?folder=<%= f.id %>"> <%= f.name %> </a>
 						</div>
 
 						<button style="display: inline" id="updateButton <%= f.id %>" onclick="
@@ -25,13 +25,13 @@
 							Rename
 						</button>
 
-						<form action="/updateFolder/<%= f.id %>" method="POST" id="nameInput <%= f.id %>" style="display: none">
+						<form action="/folder/update/<%= f.id %>" method="POST" id="nameInput <%= f.id %>" style="display: none">
 							<input type="text" name="folderName" id="folderName" value="<%= f.name %>">
 							
 							<button type="submit"> Submit </button>
 						</form>
 
-						<form action="/deleteFolder/<%= f.id %>" method="POST" style="display: inline">
+						<form action="/folder/delete/<%= f.id %>" method="POST" style="display: inline">
 							<button type="submit" onclick="return confirm('Are you sure you want to delete folder <%= f.name %>?');">
 								Delete
 							</button>
@@ -48,12 +48,12 @@
 			<% } %>
 		</ul>
 
-		<a href="/newFolder">New Folder</a>
+		<a href="/folder/new">New Folder</a>
 
 		<h2>Unsorted Files</h2>
 
 		<%- include('./partials/listOfFiles', { currentFiles: currentFiles }) %>
 
-		<a href="/upload">Upload File</a>
+		<a href="/file/new">Upload File</a>
 	</body>
 </html>
