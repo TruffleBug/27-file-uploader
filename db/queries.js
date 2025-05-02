@@ -60,12 +60,13 @@ async function deleteFolder(folderId) {
 //     });
 
 // FILES -------------------------
-async function createFiles(uploadedFile, uploadToFolder) {
+async function createFiles(uploadedFile, uploadToFolder, publicURL) {
     console.log('UPLOADEDFILE: ', uploadedFile, ', FOLDER: ', uploadToFolder)    
 
     let uploadData = {
         name: uploadedFile.originalname,
-        size: uploadedFile.size
+        size: uploadedFile.size,
+        url: publicURL
     };
 
     if(uploadToFolder != 'none') {
@@ -79,12 +80,12 @@ async function createFiles(uploadedFile, uploadToFolder) {
     });
 };
 
-async function readFiles(id) {
+async function readFiles(folderId) {
     let searchId;
-    if(!id) {
+    if(!folderId) {
         searchId = null;
     } else {
-        searchId = Number(id);
+        searchId = Number(folderId);
     }
 
     const files = await prisma.file.findMany({
@@ -95,8 +96,16 @@ async function readFiles(id) {
             { name: 'asc' }
         ]
     });
-    // console.log(files)
     return files
+};
+
+async function readFileDetails(fileId) {
+    const currentFile = await prisma.file.findUnique({
+        where: {
+            id: Number(fileId),
+        },
+    });
+    return currentFile
 };
 
 async function updateFile(fileId, fileName) {
@@ -129,6 +138,7 @@ module.exports = {
 
     createFiles,
     readFiles,
+    readFileDetails,
     updateFile,
     deleteFile
 }

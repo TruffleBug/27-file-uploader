@@ -1,0 +1,19 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="/styles.css">
+		<title><%= locals.title %></title>
+	</head>
+	<body>
+        <h1><%= locals.title %></h1>
+
+		<ul class="fileDetails">
+			<li><h3> Name: </h3><%= currentFile.name %> </li>
+			<li><h3> Folder: </h3><%= locals.currentFolder %></li>
+			<li><h3> Upload Date & Time: </h3><%= currentFile.uploadedAt %></li>
+			<li><h3> Size: </h3><%= currentFile.size %> bytes</li>
+			<li><h3> URL: </h3><%= currentFile.url %></li>
+		</ul>
+		
+		<a href="/">Back</a>
+	</body>
+</html>

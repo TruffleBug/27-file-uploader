@@ -19,6 +19,7 @@ model File {
   name       String   @db.VarChar(100) @unique
   uploadedAt DateTime @default(now())
   size       Int
+  url        String   @db.VarChar(1000) @unique
   folder     Folders?   @relation(fields: [folderId], references: [id])
   folderId   Int?
 }

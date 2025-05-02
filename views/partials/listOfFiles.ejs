@@ -3,10 +3,15 @@
 		<% currentFiles.forEach(function(f) { %>
 			<li>
 				<div id="nameText <%= f.id %>" style="display: inline;">
-					 <%= f.name %>
+					 <a href="<%= f.url %>" target="<%= f.name %>"> <%= f.name %> </a>
 				</div>
 
+				<button style="display: inline" id="viewDetailsButton <%= f.id %>" onclick="location.href='/file/view?file=<%= f.id %>'">
+					View Details
+				</button>
+
 				<button style="display: inline" id="updateButton <%= f.id %>" onclick="
+					document.getElementById('viewDetailsButton <%= f.id %>').style.display='none',
 					document.getElementById('nameText <%= f.id %>').style.display='none',
 					document.getElementById('updateButton <%= f.id %>').style.display='none',
 					document.getElementById('nameInput <%= f.id %>').style.display='inline',
@@ -28,6 +33,7 @@
 				</form>
 
 				<button id="cancelButton <%= f.id %>" style="display: none;" onclick="
+					document.getElementById('viewDetailsButton <%= f.id %>').style.display='inline',
 					document.getElementById('nameText <%= f.id %>').style.display='inline',
 					document.getElementById('updateButton <%= f.id %>').style.display='inline',
 					document.getElementById('nameInput <%= f.id %>').style.display='none',

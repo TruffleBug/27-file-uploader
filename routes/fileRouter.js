@@ -18,5 +18,9 @@ fileRouter
     .post('/delete/:fileId', fileController.deleteFilePost, (req, res) => { 
         res.redirect('/')
     })
+
+    .get('/view', fileController.readFileDetailByIdGet, (req, res) => {
+        res.render('viewFileDetails', { title: 'File Details', currentFile: res.locals.currentFile, currentFolder: res.locals.currentFolder.name })
+    })
     
 module.exports = fileRouter;

@@ -14,3 +14,12 @@ body {
 .fileList {
 
 }
+
+.fileDetails {
+	list-style: none;
+}
+
+.fileDetails h3 {
+	display: inline;
+	margin-right: 12px;
+}

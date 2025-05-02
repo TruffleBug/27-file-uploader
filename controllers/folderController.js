@@ -1,7 +1,6 @@
 const multer = require('multer');
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
-// const upload = multer({ dest: './uploads/ '});
 const db = require("../db/queries");
 
 async function createFolderPost (req, res, next) {
