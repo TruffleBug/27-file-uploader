@@ -3,6 +3,7 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 const db = require("../db/queries");
 
+
 async function createFolderPost (req, res, next) {
     const { folderName } = req.body;
     await db.createFolder(folderName);

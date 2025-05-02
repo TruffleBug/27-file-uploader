@@ -14,10 +14,6 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
 
-// const { createClient } = require('@supabase/supabase-js');
-// Create a single supabase client for interacting with your database
-// const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
-
 // ---------------------------------------------------------------------
 
 const indexRouter = require('./routes/indexRouter');
@@ -27,6 +23,11 @@ const fileRouter = require('./routes/fileRouter');
 app.use('/', indexRouter);
 app.use('/folder', folderRouter);
 app.use('/file', fileRouter);
+
+app.use((err, req, res, next) => {
+	console.error(err);
+	res.status(Number(err.statusCode) || 500).send(err.message);
+});
 
 const PORT = 3000;
 app.listen(PORT, () => {

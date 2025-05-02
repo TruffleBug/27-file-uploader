@@ -1,52 +1,52 @@
 const { PrismaClient } = require('../generated/prisma');
 const { connect, search } = require('../routes/indexRouter');
 
+
 const prisma = new PrismaClient();
 
 async function createFolder(name) {
-    await prisma.folders.create({
-        data: {
-            name: name
-        }
-    })
+    try {
+        await prisma.folders.create({
+            data: { name: name }
+        });
+    } catch (error) {
+        throw new Error('Folder name already exists.')
+    }
 };
 
 async function readFolders() {
     const folders = await prisma.folders.findMany({
-        orderBy: [
-            { name: 'asc' }
-        ]
+        orderBy: [{ name: 'asc' }]
     });
-    // console.log('FOLDERS: ', folders);
-    return folders
+    return folders;
 };
 
 async function readFolderById(searchId) {
     const folder = await prisma.folders.findUnique({
-        where: {
-            id: Number(searchId)
-        }
+        where: { id: Number(searchId) }
     });
-    return folder
+    return folder;
 };
 
 async function updateFolder(folderId, folderName) {
-    await prisma.folders.update({
-        where: {
-            id: folderId,
-        },
-        data: {
-            name: folderName,
-        },
-    })
+    try {
+        await prisma.folders.update({ 
+            where: { id: folderId }, 
+            data: { name: folderName } 
+        });
+    } catch (error) {
+        throw new Error('Folder not found.')
+    }
 };
 
 async function deleteFolder(folderId) {
-    await prisma.folders.delete({
-        where: {
-            id: Number(folderId)
-        }
-    })
+    try {
+        await prisma.folders.delete({
+            where: { id: Number(folderId) }
+        });
+    } catch (error) {
+        throw new Error('Folder not found.')
+    }
 };
 
 // allFolders()
@@ -60,6 +60,8 @@ async function deleteFolder(folderId) {
 //     });
 
 // FILES -------------------------
+
+// error handling on fileController
 async function createFiles(uploadedFile, uploadToFolder, publicURL) {
     console.log('UPLOADEDFILE: ', uploadedFile, ', FOLDER: ', uploadToFolder)    
 
@@ -89,44 +91,45 @@ async function readFiles(folderId) {
     }
 
     const files = await prisma.file.findMany({
-        where: {
-            folderId: searchId
-        },
-        orderBy: [
-            { name: 'asc' }
-        ]
+        where: { folderId: searchId },
+        orderBy: [{ name: 'asc' } ]
     });
-    return files
+
+    return files;
 };
 
 async function readFileDetails(fileId) {
     const currentFile = await prisma.file.findUnique({
-        where: {
-            id: Number(fileId),
-        },
+        where: { id: Number(fileId) },
     });
-    return currentFile
+
+    if(!currentFile) {
+        throw new Error('File not found.')
+    }
+
+    return currentFile;
 };
 
 async function updateFile(fileId, fileName) {
-    await prisma.file.update({
-        where: {
-            id: fileId,
-        },
-        data: {
-            name: fileName,
-        },
-    })
+    try {
+        await prisma.file.update({
+            where: { id: fileId },
+            data: { name: fileName },
+        })
+    } catch (error) {
+        throw new Error(error)
+    }
 };
 
 async function deleteFile(fileId) {
-    await prisma.file.delete({
-        where: {
-            id: Number(fileId)
-        }
-    })
+    try {
+        await prisma.file.delete({
+            where: { id: Number(fileId) }
+        })
+    } catch (error) {
+        throw new Error(error)
+    }
 };
-
 
 
 module.exports = {
